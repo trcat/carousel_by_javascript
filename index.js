@@ -5,8 +5,6 @@ let distance = 0;
 // 第一个克隆元素到 wrap 最左边的距离就是单次轮播的距离
 const translateLimit = cloneFirst.offsetLeft;
 const speed = translateLimit / 10000;
-console.log(translateLimit);
-console.log(cloneFirst.offsetParent);
 
 // 设定 timer 并开始轮播
 let timer;
