@@ -1,7 +1,6 @@
 const container = document.querySelector(".carousel-container");
 const wrap = document.querySelector(".carousel-wrap");
 const cloneFirst = document.querySelector('.clone-first');
-wrap.style.position = "relative";
 let distance = 0;
 // 第一个克隆元素到 wrap 最左边的距离就是单次轮播的距离
 const translateLimit = cloneFirst.offsetLeft;
