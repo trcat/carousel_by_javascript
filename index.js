@@ -5,13 +5,12 @@ const cloneFirst = document.querySelector(".clone-first");
 const translateLimit = cloneFirst.offsetLeft;
 const speed = translateLimit / 10000;
 // 标记当前轮播方向, 默认为 left, 自左向右
-let direction = "right";
+let direction = "left";
 let distance;
 if (direction === "left") {
   distance = 0;
 } else {
   distance = translateLimit * -1;
-  console.log(distance)
   wrap.style.transform = `translateX(${distance}px)`;
 }
 
@@ -41,4 +40,11 @@ wrap.onmouseleave = () => {
   timer = window.setTimeout(
     direction === "left" ? leftCallback : rightCallback
   );
+};
+
+// 为轮播方向切换按钮添加点击事件, 修改 direction 的值
+document.querySelector(".btn-direction").onclick = () => {
+  direction = direction === "left" ? "right" : "left";
+  window.clearTimeout(timer);
+  timer = window.setTimeout(direction === "left" ? leftCallback : rightCallback);
 };
