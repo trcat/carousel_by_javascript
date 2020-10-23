@@ -13,6 +13,7 @@ body {
 .carousel-wrap {
   overflow: auto;
   width: 2860px;
+  position: relative;
 }
 
 .carousel-item {
