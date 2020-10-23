@@ -1,9 +1,9 @@
 class Carousel {
-  constructor() {
-    this.el = ".carousel-container";
-    this.space = 20;
-    this.direction = "left";
-    this.duration = 10000;
+  constructor(options) {
+    this.el = options.el;
+    this.space = options.space || 20;
+    this.direction = options.direction || "left";
+    this.duration = options.duration || 10000;
     this.container = null;
     this.items = null;
     this.firstCloneItems = null;
@@ -32,6 +32,9 @@ class Carousel {
   }
   initItems() {
     this.items = document.querySelectorAll(`${this.el} .carousel-item`);
+    this.items.forEach(
+      (i, index) => index > 0 && (i.style.marginLeft = `${this.space}px`)
+    );
   }
   initCloneNode() {
     const width = this.container.clientWidth;
@@ -112,7 +115,7 @@ class Carousel {
     let result = 0;
     for (let i = 0; i < node.children.length; i++) {
       result += node.children[i].offsetWidth;
-      if (i !== 0) {
+      if (i !== 0) {让部分参数从组件外部传入
         result += space;
       }
     }
@@ -121,4 +124,9 @@ class Carousel {
   }
 }
 
-new Carousel();
+new Carousel({
+  el: ".carousel-container", // 必填, 渲染目标
+  space: 20, // 选填, 轮播内容间距
+  direction: "left", // 选填, 轮播方向
+  duration: 10000, // 选填, 单次轮播完成时间
+});

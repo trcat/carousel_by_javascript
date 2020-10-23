@@ -10,3 +10,4 @@
 - [x] 用 javascirpt 生成 `wrap` div 标签
 - [X] 用 javascript 生成克隆节点, 并计算 wrap 的宽度
 - [X] 用 ES6 class 改写 javascript 代码
+- [X] 让部分参数从组件外部传入

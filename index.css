@@ -20,7 +20,3 @@ body {
   text-align: center;
   float: left;
 }
-
-.carousel-item + .carousel-item {
-  margin-left: 20px;
-}
