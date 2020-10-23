@@ -9,3 +9,4 @@
 - [x] 实现向左向右轮播动态切换
 - [x] 用 javascirpt 生成 `wrap` div 标签
 - [X] 用 javascript 生成克隆节点, 并计算 wrap 的宽度
+- [ ] 用 ES6 class 改写 javascript 代码

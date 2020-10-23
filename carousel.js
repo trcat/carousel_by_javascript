@@ -1,0 +1,124 @@
+class Carousel {
+  constructor() {
+    this.el = ".carousel-container";
+    this.space = 20;
+    this.direction = "left";
+    this.duration = 10000;
+    this.container = null;
+    this.items = null;
+    this.firstCloneItems = null;
+    this.wrap = null;
+    this.translateLimit = 0;
+    this.speed = 0;
+    this.realDistance = 0;
+    this.timer = null;
+    this.init();
+  }
+  init() {
+    this.initContainer();
+    this.initItems();
+    this.initCloneNode();
+    this.initWrap();
+    this.initConfig();
+    this.initCarousel();
+    this.initChangeBtn();
+  }
+  initContainer() {
+    const container = document.querySelector(this.el);
+    container.style.margin = "0";
+    container.style.padding = "0";
+
+    this.container = container;
+  }
+  initItems() {
+    this.items = document.querySelectorAll(`${this.el} .carousel-item`);
+  }
+  initCloneNode() {
+    const width = this.container.clientWidth;
+    let count = -1;
+    let total = count;
+
+    while (total < width) {
+      count += 1;
+      total += this.items[count].offsetWidth;
+    }
+
+    let _count = -1;
+    while (_count < count) {
+      _count += 1;
+      const cloneNode = this.items[_count].cloneNode(true);
+      _count === 0 && (this.firstCloneItems = cloneNode);
+      this.container.append(cloneNode);
+    }
+  }
+  initWrap() {
+    const result = document.createElement("div");
+    result.style.width = `${this.computeWidth(this.container, this.space)}px`;
+    result.style.position = "relative";
+    result.style.overflow = "auto";
+    result.style.margin = "0";
+    result.style.padding = "0";
+
+    while (this.container.firstChild) {
+      result.append(this.container.firstChild);
+    }
+
+    this.container.append(result);
+
+    this.wrap = result;
+    this.wrap.onmouseover = () => {
+      window.clearInterval(this.timer);
+    };
+    this.wrap.onmouseleave = () => {
+      this.initCarousel();
+    };
+  }
+  initConfig() {
+    this.translateLimit = this.firstCloneItems.offsetLeft;
+    this.speed = this.translateLimit / this.duration;
+
+    if (this.direction === "left") {
+      this.realDistance = 0;
+    } else {
+      this.realDistance = this.translateLimit * -1;
+      this.wrap.style.transform = `translateX(${this.realDistance}px)`;
+    }
+  }
+  initCarousel() {
+    if (this.timer) window.clearTimeout(this.timer);
+    this.timer = window.setTimeout(this.startCarousel());
+  }
+  initChangeBtn() {
+    document.querySelector(".btn-direction").onclick = () => {
+      this.direction = this.direction === "left" ? "right" : "left";
+      this.initCarousel();
+    };
+  }
+  startCarousel() {
+    this.timer && window.clearTimeout(this.timer);
+    if (this.direction === "left") {
+      Math.abs(this.realDistance) >= this.translateLimit
+        ? (this.realDistance = 0)
+        : (this.realDistance -= this.speed);
+    } else {
+      this.realDistance >= 0
+        ? (this.realDistance = this.translateLimit * -1)
+        : (this.realDistance += this.speed);
+    }
+    this.wrap.style.transform = `translateX(${this.realDistance}px)`;
+    this.timer = window.setTimeout(() => this.startCarousel(), 1);
+  }
+  computeWidth(node, space) {
+    let result = 0;
+    for (let i = 0; i < node.children.length; i++) {
+      result += node.children[i].offsetWidth;
+      if (i !== 0) {
+        result += space;
+      }
+    }
+
+    return result;
+  }
+}
+
+new Carousel();
