@@ -10,12 +10,6 @@ body {
   overflow: hidden;
 }
 
-.carousel-wrap {
-  overflow: auto;
-  width: 2860px;
-  position: relative;
-}
-
 .carousel-item {
   width: 300px;
   line-height: 200px;

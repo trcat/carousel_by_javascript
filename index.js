@@ -1,5 +1,7 @@
 const container = document.querySelector(".carousel-container");
-const wrap = document.querySelector(".carousel-wrap");
+container.style.margin = "0";
+container.style.padding = "0";
+const wrap = generateWrap(container);
 const cloneFirst = document.querySelector(".clone-first");
 // 第一个克隆元素到 wrap 最左边的距离就是单次轮播的距离
 const translateLimit = cloneFirst.offsetLeft;
@@ -46,5 +48,25 @@ wrap.onmouseleave = () => {
 document.querySelector(".btn-direction").onclick = () => {
   direction = direction === "left" ? "right" : "left";
   window.clearTimeout(timer);
-  timer = window.setTimeout(direction === "left" ? leftCallback : rightCallback);
+  timer = window.setTimeout(
+    direction === "left" ? leftCallback : rightCallback
+  );
 };
+
+// 生成 wrap 并将其渲染到 container 中, container 的所有子节点也都移入 wrap 中
+function generateWrap(parent) {
+  const result = document.createElement("div");
+  result.style.width = "2860px";
+  result.style.position = "relative";
+  result.style.overflow = "auto";
+  result.style.margin = "0";
+  result.style.padding = "0";
+
+  while (parent.firstChild) {
+    result.append(parent.firstChild);
+  }
+
+  parent.append(result);
+
+  return result;
+}
