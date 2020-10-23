@@ -4,6 +4,7 @@ class Carousel {
     this.space = options.space || 20;
     this.direction = options.direction || "left";
     this.duration = options.duration || 10000;
+    this.dirBtn = options.dirBtn || {};
     this.container = null;
     this.items = null;
     this.firstCloneItems = null;
@@ -21,7 +22,7 @@ class Carousel {
     this.initWrap();
     this.initConfig();
     this.initCarousel();
-    this.initChangeBtn();
+    this.initDirBtn();
   }
   initContainer() {
     const container = document.querySelector(this.el);
@@ -116,6 +117,24 @@ class Carousel {
     this.wrap.style.transform = `translateX(${this.realDistance}px)`;
     this.timer = window.setTimeout(() => this.startCarousel(), 1);
   }
+  initDirBtn() {
+    if (this.dirBtn.left && document.querySelector(this.dirBtn.left)) {
+      document.querySelector(this.dirBtn.left).onclick = () => {
+        if (this.direction !== "left") {
+          this.direction = "left";
+          this.initCarousel();
+        }
+      };
+    }
+    if (this.dirBtn.right && document.querySelector(this.dirBtn.right)) {
+      document.querySelector(this.dirBtn.right).onclick = () => {
+        if (this.direction !== "right") {
+          this.direction = "right";
+          this.initCarousel();
+        }
+      };
+    }
+  }
   computeWidth(node, space) {
     let result = 0;
     for (let i = 0; i < node.children.length; i++) {
@@ -134,4 +153,9 @@ new Carousel({
   space: 20, // 选填, 轮播内容间距
   direction: "left", // 选填, 轮播方向
   duration: 10000, // 选填, 单次轮播完成时间
+  dirBtn: {
+    // 选填, 控制向左或向右轮播按钮
+    left: ".left", // 选填, 向左
+    right: ".right", // 选填, 向右
+  },
 });
