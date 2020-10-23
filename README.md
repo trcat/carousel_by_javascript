@@ -8,3 +8,4 @@
 - [x] 鼠标悬停轮播停止, 移开鼠标轮播继续
 - [x] 实现向左向右轮播动态切换
 - [x] 用 javascirpt 生成 `wrap` div 标签
+- [X] 用 javascript 生成克隆节点, 并计算 wrap 的宽度

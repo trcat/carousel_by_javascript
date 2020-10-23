@@ -1,6 +1,9 @@
+// 子组件之间的间距
+const space = 20;
 const container = document.querySelector(".carousel-container");
 container.style.margin = "0";
 container.style.padding = "0";
+const items = document.querySelectorAll(".carousel-item");
 const wrap = generateWrap(container);
 const cloneFirst = document.querySelector(".clone-first");
 // 第一个克隆元素到 wrap 最左边的距离就是单次轮播的距离
@@ -56,7 +59,10 @@ document.querySelector(".btn-direction").onclick = () => {
 // 生成 wrap 并将其渲染到 container 中, container 的所有子节点也都移入 wrap 中
 function generateWrap(parent) {
   const result = document.createElement("div");
-  result.style.width = "2860px";
+
+  generateCloneNode(items, parent);
+
+  result.style.width = `${computeWidth(parent)}px`;
   result.style.position = "relative";
   result.style.overflow = "auto";
   result.style.margin = "0";
@@ -67,6 +73,39 @@ function generateWrap(parent) {
   }
 
   parent.append(result);
+
+  return result;
+}
+
+// 根据 container 的宽度, 从头依次复制若干个子节点
+function generateCloneNode(items, viewBox) {
+  const width = viewBox.clientWidth;
+  let count = -1;
+  let total = count;
+  while (total < width) {
+    count += 1;
+    total += items[count].offsetWidth;
+  }
+
+  let _count = -1;
+  while (_count < count) {
+    _count += 1;
+    const cloneNode = items[_count].cloneNode(true);
+    _count === 0 && (cloneNode.classList.add('clone-first'));
+    viewBox.append(cloneNode);
+  }
+}
+
+// 计算 wrap 的宽度
+function computeWidth(target) {
+  let result = 0;
+  for (let i = 0; i < target.children.length; i++) {
+    result += target.children[i].offsetWidth;
+    console.log(target.children[i].offsetWidth)
+    if (i !== 0 ) {
+      result += space;
+    }
+  }
 
   return result;
 }
