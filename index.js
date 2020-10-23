@@ -9,6 +9,7 @@ const speed = translateLimit / 10000;
 // 设定 timer 并开始轮播
 let timer;
 function callback() {
+  // 释放上一次的 timeout
   window.clearTimeout(timer);
   Math.abs(distance) >= translateLimit ? (distance = 0) : (distance -= speed);
   wrap.style.transform = `translateX(${distance}px)`;
@@ -17,4 +18,9 @@ function callback() {
 timer = window.setTimeout(callback);
 
 // wrap 添加 mouseover 和 mouseleave 事件
-wrap.onmouseover = () => {};
+wrap.onmouseover = () => {
+  window.clearInterval(timer);
+};
+wrap.onmouseleave = () => {
+  timer = window.setTimeout(callback);
+};
