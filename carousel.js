@@ -50,7 +50,12 @@ class Carousel {
     while (_count < count) {
       _count += 1;
       const cloneNode = this.items[_count].cloneNode(true);
-      _count === 0 && (this.firstCloneItems = cloneNode);
+
+      if (_count === 0) {
+        cloneNode.style.marginLeft = `${this.space}px`;
+        this.firstCloneItems = cloneNode;
+      }
+
       this.container.append(cloneNode);
     }
   }
@@ -115,7 +120,7 @@ class Carousel {
     let result = 0;
     for (let i = 0; i < node.children.length; i++) {
       result += node.children[i].offsetWidth;
-      if (i !== 0) {让部分参数从组件外部传入
+      if (i !== 0) {
         result += space;
       }
     }
