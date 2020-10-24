@@ -165,15 +165,3 @@ class Carousel {
     return result;
   }
 }
-
-new Carousel({
-  el: ".carousel-container", // 必填, 渲染目标
-  space: 20, // 选填, 轮播内容间距
-  direction: "left", // 选填, 轮播方向
-  duration: 10000, // 选填, 单次轮播完成时间
-  dirBtn: {
-    // 选填, 控制向左或向右轮播按钮
-    left: ".left", // 选填, 向左
-    right: ".right", // 选填, 向右
-  },
-});

@@ -20,6 +20,16 @@
   },
   "homepage": "https://github.com/trcat/carousel_by_javascript#readme",
   "devDependencies": {
-    "gulp": "^4.0.2"
-  }
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "gulp": "^4.0.2",
+    "gulp-babel": "^8.0.0",
+    "gulp-rename": "^2.0.0",
+    "gulp-uglify": "^3.0.2"
+  },
+  "browserslist": [
+    "last 2 versions",
+    "> 1%",
+    "ie >= 9"
+  ]
 }
