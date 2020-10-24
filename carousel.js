@@ -28,6 +28,7 @@ class Carousel {
     const container = document.querySelector(this.el);
     container.style.margin = "0";
     container.style.padding = "0";
+    container.style.overflow = "hidden";
 
     this.container = container;
   }
