@@ -41,7 +41,8 @@ class Carousel {
     this.items = document.querySelectorAll(`${this.el} .carousel-item`);
     this.items.forEach((i, index) => {
       total += i.offsetWidth;
-
+      i.style.float = "left";
+      
       if (index > 0) {
         i.style.marginLeft = `${this.space}px`;
         total += this.space;
