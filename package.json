@@ -1,0 +1,25 @@
+{
+  "name": "carousel_by_javascript",
+  "version": "1.0.0",
+  "description": "用 javascript 实现走马灯动画效果",
+  "main": "carousel.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trcat/carousel_by_javascript.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/trcat/carousel_by_javascript/issues"
+  },
+  "homepage": "https://github.com/trcat/carousel_by_javascript#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
