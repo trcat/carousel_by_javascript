@@ -1,5 +1,5 @@
 class Carousel {
-  constructor(options) {
+  constructor(options = {}) {
     this.el = options.el;
     this.space = options.space || 20;
     this.direction = options.direction || "left";
@@ -13,6 +13,7 @@ class Carousel {
     this.speed = 0;
     this.realDistance = 0;
     this.timer = null;
+    this.shouldCarousel = true;
     this.init();
   }
   init() {
@@ -26,6 +27,8 @@ class Carousel {
   }
   initContainer() {
     const container = document.querySelector(this.el);
+
+    if (!container) throw new Error("找不到 container");
     container.style.margin = "0";
     container.style.padding = "0";
     container.style.overflow = "hidden";
@@ -33,32 +36,43 @@ class Carousel {
     this.container = container;
   }
   initItems() {
+    let total = 0;
+
     this.items = document.querySelectorAll(`${this.el} .carousel-item`);
-    this.items.forEach(
-      (i, index) => index > 0 && (i.style.marginLeft = `${this.space}px`)
-    );
+    this.items.forEach((i, index) => {
+      total += i.offsetWidth;
+
+      if (index > 0) {
+        i.style.marginLeft = `${this.space}px`;
+        total += this.space;
+      }
+    });
+
+    this.shouldCarousel = total > this.container.clientWidth;
   }
   initCloneNode() {
-    const width = this.container.clientWidth;
-    let count = -1;
-    let total = count;
+    if (this.shouldCarousel) {
+      const width = this.container.clientWidth;
+      let count = -1;
+      let total = count;
 
-    while (total < width) {
-      count += 1;
-      total += this.items[count].offsetWidth;
-    }
-
-    let _count = -1;
-    while (_count < count) {
-      _count += 1;
-      const cloneNode = this.items[_count].cloneNode(true);
-
-      if (_count === 0) {
-        cloneNode.style.marginLeft = `${this.space}px`;
-        this.firstCloneItems = cloneNode;
+      while (total < width) {
+        count += 1;
+        total += this.items[count].offsetWidth;
       }
 
-      this.container.append(cloneNode);
+      let _count = -1;
+      while (_count < count) {
+        _count += 1;
+        const cloneNode = this.items[_count].cloneNode(true);
+
+        if (_count === 0) {
+          cloneNode.style.marginLeft = `${this.space}px`;
+          this.firstCloneItems = cloneNode;
+        }
+
+        this.container.append(cloneNode);
+      }
     }
   }
   initWrap() {
@@ -76,33 +90,54 @@ class Carousel {
     this.container.append(result);
 
     this.wrap = result;
-    this.wrap.onmouseover = () => {
-      window.clearInterval(this.timer);
-    };
-    this.wrap.onmouseleave = () => {
-      this.initCarousel();
-    };
+
+    if (this.shouldCarousel) {
+      this.wrap.onmouseover = () => {
+        window.clearInterval(this.timer);
+      };
+      this.wrap.onmouseleave = () => {
+        this.initCarousel();
+      };
+    }
   }
   initConfig() {
-    this.translateLimit = this.firstCloneItems.offsetLeft;
-    this.speed = this.translateLimit / this.duration;
+    if (this.shouldCarousel) {
+      this.translateLimit = this.firstCloneItems.offsetLeft;
+      this.speed = this.translateLimit / this.duration;
 
-    if (this.direction === "left") {
-      this.realDistance = 0;
-    } else {
-      this.realDistance = this.translateLimit * -1;
-      this.wrap.style.transform = `translateX(${this.realDistance}px)`;
+      if (this.direction === "left") {
+        this.realDistance = 0;
+      } else {
+        this.realDistance = this.translateLimit * -1;
+        this.wrap.style.transform = `translateX(${this.realDistance}px)`;
+      }
     }
   }
   initCarousel() {
-    if (this.timer) window.clearTimeout(this.timer);
-    this.timer = window.setTimeout(this.startCarousel());
+    if (this.shouldCarousel) {
+      if (this.timer) window.clearTimeout(this.timer);
+      this.timer = window.setTimeout(this.startCarousel());
+    }
   }
-  initChangeBtn() {
-    document.querySelector(".btn-direction").onclick = () => {
-      this.direction = this.direction === "left" ? "right" : "left";
-      this.initCarousel();
-    };
+  initDirBtn() {
+    if (this.shouldCarousel) {
+      if (this.dirBtn.left && document.querySelector(this.dirBtn.left)) {
+        document.querySelector(this.dirBtn.left).onclick = () => {
+          if (this.direction !== "left") {
+            this.direction = "left";
+            this.initCarousel();
+          }
+        };
+      }
+      if (this.dirBtn.right && document.querySelector(this.dirBtn.right)) {
+        document.querySelector(this.dirBtn.right).onclick = () => {
+          if (this.direction !== "right") {
+            this.direction = "right";
+            this.initCarousel();
+          }
+        };
+      }
+    }
   }
   startCarousel() {
     this.timer && window.clearTimeout(this.timer);
@@ -117,24 +152,6 @@ class Carousel {
     }
     this.wrap.style.transform = `translateX(${this.realDistance}px)`;
     this.timer = window.setTimeout(() => this.startCarousel(), 1);
-  }
-  initDirBtn() {
-    if (this.dirBtn.left && document.querySelector(this.dirBtn.left)) {
-      document.querySelector(this.dirBtn.left).onclick = () => {
-        if (this.direction !== "left") {
-          this.direction = "left";
-          this.initCarousel();
-        }
-      };
-    }
-    if (this.dirBtn.right && document.querySelector(this.dirBtn.right)) {
-      document.querySelector(this.dirBtn.right).onclick = () => {
-        if (this.direction !== "right") {
-          this.direction = "right";
-          this.initCarousel();
-        }
-      };
-    }
   }
   computeWidth(node, space) {
     let result = 0;
