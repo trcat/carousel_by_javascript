@@ -2,7 +2,7 @@
   "name": "@trcat/carousel",
   "version": "1.0.2",
   "description": "用 javascript 实现走马灯动画效果",
-  "main": "dist/carousel-npm.min.js",
+  "main": "dist/carousel.min.js",
   "directories": {
     "test": "test"
   },

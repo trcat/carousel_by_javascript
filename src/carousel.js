@@ -170,3 +170,7 @@ class Carousel {
     return Number(window.getComputedStyle(element).width.split("px")[0]);
   }
 }
+
+try {
+  exports.default = Carousel;
+} catch {}
