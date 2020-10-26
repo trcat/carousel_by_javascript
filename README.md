@@ -13,7 +13,7 @@
 npm install @trcat/carousel@1.0.0
 ```
 
-### 实例
+### 示例
 
 1. 通过 `new Carousel` 创建实例, 并传入对应 `options`, 实例代码如下:
 
@@ -64,7 +64,10 @@ npm install @trcat/carousel@1.0.0
    }
    ```
 
-   
+4. 如果这个轮播放在一个 `display:none` 的外框中, 一定要通过内联样式定义`carousel-container` 和 `carousel-item` 的宽度
+
+   - 组件是通过 `element.clientWidth` 和 `element.offsetWidth` 来获取宽度的，如果这个组件的父元素是包含`display:none` 样式，那么`element.clientWidth` 和 `element.offsetWidth`　获取到的值均为 `0`，所以此时必须要通过内联样式设定宽度组件才能拿到正确的宽度，例如：
+     - `<div class="carousel-item" style="width: 270px">`
 
 ### 实例代码效果
 
