@@ -1,5 +1,5 @@
 {
-  "name": "carousel_by_javascript",
+  "name": "@trcat/carousel_by_javascript",
   "version": "1.0.0",
   "description": "用 javascript 实现走马灯动画效果",
   "main": "dist/carousel-npm.min.js",
@@ -32,5 +32,5 @@
     "> 1%",
     "ie >= 9"
   ],
-  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
+  "publishConfig": { "registry": "https://npm.pkg.github.com/@trcat" }
 }
