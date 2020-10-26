@@ -48,7 +48,7 @@ npm install @trcat/carousel@1.0.0
 
 ### 注意点
 
-1. 充当 `carousel-container` 的标签必须要有宽度
+1. 充当 `carousel-container` 的标签以及 `carousel-item` 必须要有宽度设置
 
 2. 轮播的内容必须要加 `carousel-item` class, 并且并列放到充当 `carousel-container` 的标签中
 
@@ -64,10 +64,8 @@ npm install @trcat/carousel@1.0.0
    }
    ```
 
-4. 如果这个轮播放在一个 `display:none` 的外框中, 一定要通过内联样式定义`carousel-container` 和 `carousel-item` 的宽度
+   
 
-   - 组件是通过 `element.clientWidth` 和 `element.offsetWidth` 来获取宽度的，如果这个组件的父元素是包含`display:none` 样式，那么`element.clientWidth` 和 `element.offsetWidth`　获取到的值均为 `0`，所以此时必须要通过内联样式设定宽度组件才能拿到正确的宽度，例如：
-     - `<div class="carousel-item" style="width: 270px">`
 
 ### 实例代码效果
 
@@ -90,3 +88,4 @@ npm install @trcat/carousel@1.0.0
 - [X] 用 gulp 打包编译压缩 javascript 代码
 - [X] 添加 node 版本
 - [x] 提出因外框存在 `display:none` 导致宽度计算不准的解决方案, 并配合调整代码
+- [x] 用 `getComputedStyle` 实现宽度计算，解决当父元素隐藏导致宽度计算错误的问题
