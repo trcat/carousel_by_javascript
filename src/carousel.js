@@ -9,7 +9,6 @@ class Carousel {
     // init self config
     this.container = null;
     this.items = null;
-    this.firstCloneItems = null;
     this.wrap = null;
     this.translateLimit = 0;
     this.speed = 0;
@@ -51,6 +50,8 @@ class Carousel {
         total += this.space;
       }
     });
+    
+    this.translateLimit = total;
     this.shouldCarousel = total > this.getElementWidth(this.container);
   }
   initCloneNode() {
@@ -71,7 +72,6 @@ class Carousel {
 
         if (_count === 0) {
           cloneNode.style.marginLeft = `${this.space}px`;
-          this.firstCloneItems = cloneNode;
         }
 
         this.container.append(cloneNode);
@@ -105,7 +105,6 @@ class Carousel {
   }
   initConfig() {
     if (this.shouldCarousel) {
-      this.translateLimit = this.firstCloneItems.offsetLeft;
       this.speed = this.translateLimit / this.duration;
 
       if (this.direction === "left") {
