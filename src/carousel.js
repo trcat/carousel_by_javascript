@@ -40,28 +40,34 @@ class Carousel {
 
     this.items = document.querySelectorAll(`${this.el} .carousel-item`);
     this.items.forEach((i, index) => {
-      const iWidth = i.offsetWidth || i.style.width;
+      const iWidth = i.offsetWidth || Number(i.style.width.split("px")[0]);
       total += iWidth;
       i.style.float = "left";
-      
+
       if (index > 0) {
         i.style.marginLeft = `${this.space}px`;
         total += this.space;
       }
     });
 
-    const containerWidth = this.container.clientWidth || this.container.style.width;
+    const containerWidth =
+      this.container.clientWidth ||
+      Number(this.container.style.width.split("px")[0]);
     this.shouldCarousel = total > containerWidth;
   }
   initCloneNode() {
     if (this.shouldCarousel) {
-      const width = this.container.clientWidth || this.container.style.width;
+      const width =
+        this.container.clientWidth ||
+        Number(this.container.style.width.split("px")[0]);
       let count = -1;
       let total = count;
 
       while (total < width && count < this.items.length - 1) {
         count += 1;
-        const iWidth = this.items[count].offsetWidth || this.items[count].style.width;
+        const iWidth =
+          this.items[count].offsetWidth ||
+          Number(this.items[count].style.width.split("px")[0]);
         total += iWidth;
       }
 
@@ -160,7 +166,9 @@ class Carousel {
   computeWidth(node, space) {
     let result = 0;
     for (let i = 0; i < node.children.length; i++) {
-      const iWidth = node.children[i].offsetWidth || node.children[i].style.width
+      const iWidth =
+        node.children[i].offsetWidth ||
+        Number(node.children[i].style.width.split("px")[0]);
       result += iWidth;
       if (i !== 0) {
         result += space;

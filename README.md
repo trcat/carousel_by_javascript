@@ -86,3 +86,4 @@ npm install @trcat/carousel@1.0.0
 - [x] 初步添加防护措施; 如果 item 不多, 则不会进行轮播
 - [X] 用 gulp 打包编译压缩 javascript 代码
 - [X] 添加 node 版本
+- [x] 提出因外框存在 `display:none` 导致宽度计算不准的解决方案, 并配合调整代码
