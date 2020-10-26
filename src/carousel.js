@@ -1,10 +1,12 @@
 class Carousel {
   constructor(options = {}) {
+    // config from options
     this.el = options.el;
     this.space = options.space || 20;
     this.direction = options.direction || "left";
     this.duration = options.duration || 10000;
     this.dirBtn = options.dirBtn || {};
+    // init self config
     this.container = null;
     this.items = null;
     this.firstCloneItems = null;
@@ -14,6 +16,7 @@ class Carousel {
     this.realDistance = 0;
     this.timer = null;
     this.shouldCarousel = true;
+    // init
     this.init();
   }
   init() {
@@ -40,8 +43,7 @@ class Carousel {
 
     this.items = document.querySelectorAll(`${this.el} .carousel-item`);
     this.items.forEach((i, index) => {
-      const iWidth = i.offsetWidth || Number(i.style.width.split("px")[0]);
-      total += iWidth;
+      total += this.getElementWidth(i);
       i.style.float = "left";
 
       if (index > 0) {
@@ -49,26 +51,17 @@ class Carousel {
         total += this.space;
       }
     });
-
-    const containerWidth =
-      this.container.clientWidth ||
-      Number(this.container.style.width.split("px")[0]);
-    this.shouldCarousel = total > containerWidth;
+    this.shouldCarousel = total > this.getElementWidth(this.container);
   }
   initCloneNode() {
     if (this.shouldCarousel) {
-      const width =
-        this.container.clientWidth ||
-        Number(this.container.style.width.split("px")[0]);
+      const width = this.getElementWidth(this.container);
       let count = -1;
       let total = count;
 
       while (total < width && count < this.items.length - 1) {
         count += 1;
-        const iWidth =
-          this.items[count].offsetWidth ||
-          Number(this.items[count].style.width.split("px")[0]);
-        total += iWidth;
+        total += this.getElementWidth(this.items[count]);
       }
 
       let _count = -1;
@@ -166,15 +159,15 @@ class Carousel {
   computeWidth(node, space) {
     let result = 0;
     for (let i = 0; i < node.children.length; i++) {
-      const iWidth =
-        node.children[i].offsetWidth ||
-        Number(node.children[i].style.width.split("px")[0]);
-      result += iWidth;
+      result += this.getElementWidth(node.children[i]);
       if (i !== 0) {
         result += space;
       }
     }
 
     return result;
+  }
+  getElementWidth(element) {
+    return Number(window.getComputedStyle(element).width.split('px')[0]);
   }
 }
