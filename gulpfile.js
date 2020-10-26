@@ -4,7 +4,7 @@ const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 
 exports.default = function () {
-  return src("carousel.js")
+  return src("src/*.js")
     .pipe(
       babel({
         presets: ["@babel/preset-env"],
