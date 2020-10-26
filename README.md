@@ -49,7 +49,22 @@ npm install @trcat/carousel@1.0.0
 ### 注意点
 
 1. 充当 `carousel-container` 的标签必须要有宽度
+
 2. 轮播的内容必须要加 `carousel-item` class, 并且并列放到充当 `carousel-container` 的标签中
+
+3. 虽然 JavaScript 代码通过 babel 编译, 但是没有添加 polyfill, 如需要请自行添加对应 polyfill。浏览器支持情况如下：
+
+   ```json
+   {
+     "browserslist": [
+       "last 2 versions",
+       "> 1%",
+       "ie >= 9"
+     ],
+   }
+   ```
+
+   
 
 ### 实例代码效果
 
