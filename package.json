@@ -2,7 +2,7 @@
   "name": "carousel_by_javascript",
   "version": "1.0.0",
   "description": "用 javascript 实现走马灯动画效果",
-  "main": "carousel.js",
+  "main": "dist/carousel-npm.min.js",
   "directories": {
     "test": "test"
   },
@@ -31,5 +31,6 @@
     "last 2 versions",
     "> 1%",
     "ie >= 9"
-  ]
+  ],
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" }
 }
