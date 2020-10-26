@@ -50,9 +50,9 @@ class Carousel {
         total += this.space;
       }
     });
-    
-    this.translateLimit = total;
+
     this.shouldCarousel = total > this.getElementWidth(this.container);
+    this.shouldCarousel && (this.translateLimit = total + this.space);
   }
   initCloneNode() {
     if (this.shouldCarousel) {
@@ -167,6 +167,6 @@ class Carousel {
     return result;
   }
   getElementWidth(element) {
-    return Number(window.getComputedStyle(element).width.split('px')[0]);
+    return Number(window.getComputedStyle(element).width.split("px")[0]);
   }
 }
