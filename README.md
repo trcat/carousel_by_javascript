@@ -1,6 +1,53 @@
 # carousel_by_javascript
 用 javascript 实现走马灯动画效果
 
+## 使用方式
+
+1. html 引入 `carousel.min.js` 或 `carousel.js`
+
+2. 通过 `new Carousel` 创建实例, 并传入对应 `options`, 实例代码如下:
+
+   ```html
+     <div class="carousel-container">
+       <div class="carousel-item">1</div>
+       <div class="carousel-item">2</div>
+       <div class="carousel-item">3</div>
+       <div class="carousel-item">4</div>
+       <div class="carousel-item">5</div>
+       <div class="carousel-item">6</div>
+     </div>
+     <button class="left">←</button>
+     <button class="right">→</button>
+     <script src="./dist/carousel.min.js"></script>
+   ```
+
+   
+
+   ```javascript
+       new Carousel({
+         el: ".carousel-container", // 必填, 渲染目标
+         space: 20, // 选填, 轮播内容间距
+         direction: "left", // 选填, 轮播方向
+         duration: 10000, // 选填, 单次轮播完成时间
+         dirBtn: {
+           // 选填, 控制向左或向右轮播按钮
+           left: ".left", // 选填, 向左
+           right: ".right", // 选填, 向右
+         },
+       });
+   ```
+
+### 注意点
+
+1. 充当 `carousel-container` 的标签必须要有宽度
+2. 轮播的内容必须要加 `carousel-item` class, 并且并列放到充当 `carousel-container` 的标签中
+
+### 实例代码效果
+
+[效果展示](https://trcat.github.io/carousel_by_javascript/)
+
+
+
 ## log
 - [x] 实现从左到右移动, 1 毫秒移动 1px
 - [x] 轮播显示最后一个内容就停止
