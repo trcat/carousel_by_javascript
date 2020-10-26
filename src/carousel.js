@@ -15,9 +15,13 @@ class Carousel {
     this.realDistance = 0;
     this.timer = null;
     this.shouldCarousel = true;
+    this.cloneWidth = 0;
     // init
     this.init();
   }
+  /**
+   * 初始化组件
+   */
   init() {
     this.initContainer();
     this.initItems();
@@ -27,9 +31,12 @@ class Carousel {
     this.initCarousel();
     this.initDirBtn();
   }
+  /**
+   * 初始化 container 部分
+   */
   initContainer() {
     const container = document.querySelector(this.el);
-
+    // container 是必须要素，如果没有，则报错
     if (!container) throw new Error("找不到 container");
     container.style.margin = "0";
     container.style.padding = "0";
@@ -37,6 +44,9 @@ class Carousel {
 
     this.container = container;
   }
+  /**
+   * 初始化 items 部分
+   */
   initItems() {
     let total = 0;
 
@@ -50,20 +60,25 @@ class Carousel {
         total += this.space;
       }
     });
-
+    // 当轮播内容宽度大于 container 宽度时，才需要轮播操作
     this.shouldCarousel = total > this.getElementWidth(this.container);
     this.shouldCarousel && (this.translateLimit = total + this.space);
   }
+  /**
+   * 根据实际情况，创建克隆元素，使得动画开始状态与结束状态保持一致
+   */
   initCloneNode() {
     if (this.shouldCarousel) {
       const width = this.getElementWidth(this.container);
       let count = -1;
-      let total = count;
+      let total = 0;
 
       while (total < width && count < this.items.length - 1) {
         count += 1;
         total += this.getElementWidth(this.items[count]);
       }
+
+      this.cloneWidth = total + count * this.space;
 
       let _count = -1;
       while (_count < count) {
@@ -78,9 +93,12 @@ class Carousel {
       }
     }
   }
+  /**
+   * 初始化 wrap 部分，将其添加到 container 中，container 中原子元素都加入到 wrap 中
+   */
   initWrap() {
     const result = document.createElement("div");
-    result.style.width = `${this.computeWidth(this.container, this.space)}px`;
+    result.style.width = `${this.translateLimit + this.cloneWidth}px`;
     result.style.position = "relative";
     result.style.overflow = "auto";
     result.style.margin = "0";
@@ -103,6 +121,9 @@ class Carousel {
       };
     }
   }
+  /**
+   * 初始化其他参数
+   */
   initConfig() {
     if (this.shouldCarousel) {
       this.speed = this.translateLimit / this.duration;
@@ -115,12 +136,18 @@ class Carousel {
       }
     }
   }
+  /**
+   * 初始化轮播行为
+   */
   initCarousel() {
     if (this.shouldCarousel) {
       if (this.timer) window.clearTimeout(this.timer);
       this.timer = window.setTimeout(this.startCarousel());
     }
   }
+  /**
+   * 初始化左右方向轮播按钮行为
+   */
   initDirBtn() {
     if (this.shouldCarousel) {
       if (this.dirBtn.left && document.querySelector(this.dirBtn.left)) {
@@ -141,6 +168,9 @@ class Carousel {
       }
     }
   }
+  /**
+   * 轮播事件
+   */
   startCarousel() {
     this.timer && window.clearTimeout(this.timer);
     if (this.direction === "left") {
@@ -155,17 +185,11 @@ class Carousel {
     this.wrap.style.transform = `translateX(${this.realDistance}px)`;
     this.timer = window.setTimeout(() => this.startCarousel(), 1);
   }
-  computeWidth(node, space) {
-    let result = 0;
-    for (let i = 0; i < node.children.length; i++) {
-      result += this.getElementWidth(node.children[i]);
-      if (i !== 0) {
-        result += space;
-      }
-    }
-
-    return result;
-  }
+  /**
+   * 用 window.getComputedStyle 取得元素宽度
+   * @param {HTMLElement} element
+   * @return {number}
+   */
   getElementWidth(element) {
     return Number(window.getComputedStyle(element).width.split("px")[0]);
   }
