@@ -1,11 +1,21 @@
 # carousel_by_javascript
 用 javascript 实现走马灯动画效果
 
-## 使用方式
+## Usage
 
-1. html 引入 `carousel.min.js` 或 `carousel.js`
+### Browser
 
-2. 通过 `new Carousel` 创建实例, 并传入对应 `options`, 实例代码如下:
+在 html `<body>` 标签中引入 `<script src="carousel.min.js"></script>`
+
+### Node
+
+```bash
+npm install @trcat/carousel@1.0.0
+```
+
+### 实例
+
+1. 通过 `new Carousel` 创建实例, 并传入对应 `options`, 实例代码如下:
 
    ```html
      <div class="carousel-container">
@@ -18,7 +28,6 @@
      </div>
      <button class="left">←</button>
      <button class="right">→</button>
-     <script src="./dist/carousel.min.js"></script>
    ```
 
    
@@ -61,3 +70,4 @@
 - [X] 添加控制左右方向按钮参数(选填), 并调整代码
 - [x] 初步添加防护措施; 如果 item 不多, 则不会进行轮播
 - [X] 用 gulp 打包编译压缩 javascript 代码
+- [X] 添加 node 版本
