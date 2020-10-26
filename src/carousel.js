@@ -7,14 +7,23 @@ class Carousel {
     this.duration = options.duration || 10000;
     this.dirBtn = options.dirBtn || {};
     // init self config
+    // container element
     this.container = null;
+    // item elements 所有轮播内容
     this.items = null;
+    // wrap element
     this.wrap = null;
+    // 单词轮播需要移动的总距离
     this.translateLimit = 0;
+    // 移动速度
     this.speed = 0;
+    // 当前移动距离
     this.realDistance = 0;
+    // 计时器
     this.timer = null;
+    // 是否轮播
     this.shouldCarousel = true;
+    // 克隆元素宽度（不包含首个的间隔距离）
     this.cloneWidth = 0;
     // init
     this.init();
