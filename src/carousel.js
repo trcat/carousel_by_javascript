@@ -9,6 +9,7 @@ class Carousel {
     // init self config
     // container element
     this.container = null;
+    this.containerWidth = 0;
     // item elements 所有轮播内容
     this.items = null;
     // wrap element
@@ -52,6 +53,7 @@ class Carousel {
     container.style.overflow = "hidden";
 
     this.container = container;
+    this.containerWidth = this.getElementWidth(this.container);
   }
   /**
    * 初始化 items 部分
@@ -61,7 +63,7 @@ class Carousel {
 
     this.items = document.querySelectorAll(`${this.el} .carousel-item`);
     this.items.forEach((i, index) => {
-      total += this.getElementWidth(i);
+      total += this.getElementWidth(i, 'border-box');
       i.style.float = "left";
 
       if (index > 0) {
@@ -70,7 +72,7 @@ class Carousel {
       }
     });
     // 当轮播内容宽度大于 container 宽度时，才需要轮播操作
-    this.shouldCarousel = total > this.getElementWidth(this.container);
+    this.shouldCarousel = total > this.containerWidth;
     this.shouldCarousel && (this.translateLimit = total + this.space);
   }
   /**
@@ -78,13 +80,13 @@ class Carousel {
    */
   initCloneNode() {
     if (this.shouldCarousel) {
-      const width = this.getElementWidth(this.container);
+      const width = this.containerWidth;
       let count = -1;
       let total = 0;
 
       while (total < width && count < this.items.length - 1) {
         count += 1;
-        total += this.getElementWidth(this.items[count]);
+        total += this.getElementWidth(this.items[count], 'border-box');
       }
 
       this.cloneWidth = total + count * this.space;
@@ -197,10 +199,46 @@ class Carousel {
   /**
    * 用 window.getComputedStyle 取得元素宽度
    * @param {HTMLElement} element
+   * @param {string=} boxType // content-box or border-box, 默认值为 content-box, 根据不同类型获取不同范围的宽度,
    * @return {number}
    */
-  getElementWidth(element) {
-    return Number(window.getComputedStyle(element).width.split("px")[0]);
+  getElementWidth(element, boxType="content-box") {
+    const styleDeclaration = window.getComputedStyle(element);
+    const {
+      width,
+      boxSizing,
+      paddingLeft,
+      paddingRight,
+      borderLeftWidth,
+      borderRightWidth,
+      marginLeft,
+      marginRight,
+    } = styleDeclaration;
+    const strToNum = (str) => Number(str.split("px")[0]);
+    // 如果传入的 boxSizing 和元素本身的 boxSizing 一致，那么直接返回获取到的宽度
+    if (boxType === boxSizing) {
+      return computedWidth(width);
+    } else if (boxType === "content-box") {
+      return (
+        strToNum(width) -
+        strToNum(paddingLeft) -
+        strToNum(paddingRight) -
+        strToNum(borderLeftWidth) -
+        strToNum(borderRightWidth) -
+        strToNum(marginLeft) -
+        strToNum(marginRight)
+      );
+    } else if (boxType === "border-box") {
+      return (
+        strToNum(width) +
+        strToNum(paddingLeft) +
+        strToNum(paddingRight) +
+        strToNum(borderLeftWidth) +
+        strToNum(borderRightWidth) +
+        strToNum(marginLeft) +
+        strToNum(marginRight)
+      );
+    }
   }
 }
 

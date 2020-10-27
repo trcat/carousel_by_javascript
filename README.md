@@ -89,3 +89,4 @@ npm install @trcat/carousel@1.0.0
 - [X] 添加 node 版本
 - [x] 提出因外框存在 `display:none` 导致宽度计算不准的解决方案, 并配合调整代码
 - [x] 用 `getComputedStyle` 实现宽度计算，解决当父元素隐藏导致宽度计算错误的问题
+- [x] 根据 `box-sizing` 的不同优化宽度计算方式
