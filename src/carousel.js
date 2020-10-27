@@ -63,7 +63,7 @@ class Carousel {
 
     this.items = document.querySelectorAll(`${this.el} .carousel-item`);
     this.items.forEach((i, index) => {
-      total += this.getElementWidth(i, 'border-box');
+      total += this.getElementWidth(i, "border-box");
       i.style.float = "left";
 
       if (index > 0) {
@@ -86,7 +86,7 @@ class Carousel {
 
       while (total < width && count < this.items.length - 1) {
         count += 1;
-        total += this.getElementWidth(this.items[count], 'border-box');
+        total += this.getElementWidth(this.items[count], "border-box");
       }
 
       this.cloneWidth = total + count * this.space;
@@ -202,7 +202,7 @@ class Carousel {
    * @param {string=} boxType // content-box or border-box, 默认值为 content-box, 根据不同类型获取不同范围的宽度,
    * @return {number}
    */
-  getElementWidth(element, boxType="content-box") {
+  getElementWidth(element, boxType = "content-box") {
     const styleDeclaration = window.getComputedStyle(element);
     const {
       width,
@@ -217,7 +217,7 @@ class Carousel {
     const strToNum = (str) => Number(str.split("px")[0]);
     // 如果传入的 boxSizing 和元素本身的 boxSizing 一致，那么直接返回获取到的宽度
     if (boxType === boxSizing) {
-      return computedWidth(width);
+      return strToNum(width);
     } else if (boxType === "content-box") {
       return (
         strToNum(width) -
