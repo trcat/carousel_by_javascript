@@ -1,9 +1,9 @@
-const { src, dest } = require("gulp");
+const { src, dest, watch } = require("gulp");
 const babel = require("gulp-babel");
 const uglify = require("gulp-uglify");
 const rename = require("gulp-rename");
 
-exports.default = function () {
+function defaultTask() {
   return src("src/*.js")
     .pipe(
       babel({
@@ -17,4 +17,8 @@ exports.default = function () {
       })
     )
     .pipe(dest("dist"));
-};
+}
+
+watch("src/*.js", defaultTask);
+
+exports.default = defaultTask;
